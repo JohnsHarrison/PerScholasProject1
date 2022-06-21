@@ -2,6 +2,8 @@ const BASE_URL = "https://db.ygoprodeck.com/api/v7/cardinfo.php?"
 const playerHand = document.getElementById('playerHand')
 const playerField = document.getElementById('playerHand')
 const cards = document.getElementsByClassName('card')
+const draggableCards = document.querySelectorAll('div.handCard')
+const container = document.querySelectorAll('div.fieldCard')
 
 
 let response = await axios.get(`${BASE_URL}type=Normal%20Monster&level=lt5`)
@@ -18,11 +20,39 @@ console.log(response.data.data)
 // let response = await axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?level=lt5')
 // console.log(response)
 
+//create a draggable cards
+draggableCards.forEach(draggableCards =>{
+    draggableCards.addEventListener('dragstart', (e) =>{
+        console.log('drag start')
+        e.target.classList.add('dragging')
+    })
+    draggableCards.addEventListener('dragend', (e) =>{
+        e.target.classList.remove('dragging')
+        console.log('drag end')
+    })
+})
 
-playerHand.forEach(card=> {
-    playerHand.addEventListener('dragstart')
-    console.log('drag start')
-});
+
+// appends the draggable cards to the player field
+container.forEach(container =>{
+    container.addEventListener('dragover' , e =>{
+    e.preventDefault()
+    const afterElement = getDragAfterElement(container, e.clientX)
+    const draggable = document.querySelector('.dragging')
+    container.appendChild(draggable)
+    })
+})
+
+function getDragAfterElement(container, x){
+const draggableElements = [...container.querySelectorAll('.draggableCards:not(.dragging)')]
+
+draggableElements.reduce((closest, child) =>{
+    const box = child.getBoundingClientRect()
+    const offset = x - box.left - box.width / 2
+    console.log(box)
+}, { offest: Number.POSITIVE_INFINITY })
+}
+
 
 function createDeck(){
  let playerDeck=[]
@@ -57,5 +87,4 @@ function createPlayerHand(deck){
 }
 
 createPlayerHand(createDeck())
-
 
