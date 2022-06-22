@@ -5,6 +5,9 @@ const cards = document.getElementsByClassName('card')
 const draggableCards = document.querySelectorAll('div.handCard')
 const container = document.querySelectorAll('div.fieldCard')
 const computerField = document.getElementById('computerField')
+const playerHealth = document.getElementById('playerHealth')
+const computerHealth = document.getElementById('computerHealth')
+const playerDeck = document.getElementById('playerDeck')
 
 
 let response = await axios.get(`${BASE_URL}type=Normal%20Monster&level=lt5`)
@@ -43,15 +46,24 @@ container.forEach(container =>{
     })
 })
 
-function getDragAfterElement(container, x){
-const draggableElements = [...container.querySelectorAll('.draggableCards:not(.dragging)')]
+// function getDragAfterElement(container, x){
+// const draggableElements = [...container.querySelectorAll('.draggableCards:not(.dragging)')]
 
-draggableElements.reduce((closest, child) =>{
-    const box = child.getBoundingClientRect()
-    const offset = x - box.left - box.width / 2
-    console.log(box)
-}, { offest: Number.POSITIVE_INFINITY })
-}
+// draggableElements.reduce((closest, child) =>{
+//     const box = child.getBoundingClientRect()
+//     const offset = x - box.left - box.width / 2
+//     console.log(box)
+// }, { offest: Number.POSITIVE_INFINITY })
+// }
+
+
+
+// while (playerHand.children.length < 4 ){
+//     let epmtySpace = document.createElement('div')
+//         epmtySpace.className = "handCard"
+//         playerHand.push(epmtySpace)
+// }
+
 
 
 function createDeck(){
@@ -65,8 +77,7 @@ function createDeck(){
 // console.log(playerDeck)
 return playerDeck   
 }
-// createDeck()
-// createDeck()
+
 
 //create players hand from their deck
 function createPlayerHand(deck){
@@ -80,6 +91,7 @@ function createPlayerHand(deck){
         hand.push(deck[i])
     }
 
+
     return hand
 }
 //create player field
@@ -87,7 +99,6 @@ function createComputerfield(deck){
     let field=[]
     //attempt to make what the computer plays feel random
     let num = Math.floor(Math.random()* (4-1)+1)
-    console.log(num)
     for(let i=0; i < num; i++){
         let image = document.createElement('img')
         image.src=deck[i].card_images[0].image_url
@@ -97,13 +108,72 @@ function createComputerfield(deck){
     }
 
 }
-createPlayerHand(createDeck())
-createComputerfield(createDeck())
+
 // console.log(computerField.children[0])
+// console.log(createPlayerHand(createDeck()))
+
+function draw(deck){
+if(playerHand.children.length < 4){
+   let draw = document.createElement('button')
+    playerDeck.appendChild(draw)
+    draw.addEventListener('click', () =>{
+        let card =[]
+        let image = document.createElement('img')
+        image.src=deck[i].card_images[0].image_url
+        playerHand.children[i].appendChild(image)
+         card.push(deck[i])
+    })
+
+}
+
+}
+
+
+function playCards(
+
+    
+)
+
+
+
+
 
 
 function playGame(){
-    let playerHealth = 4000
-    let computerHealth = 4000
+    let pHealth = 4000
+    let cHealth = 4000
+    let pHealthRemaining = document.createElement('p')
+    let cHealthRemaining = document.createElement('p')
+    pHealthRemaining.innerText=pHealth
+    playerHealth.appendChild(pHealthRemaining)
+    cHealthRemaining.innerText=cHealth
+    computerHealth.appendChild(cHealthRemaining)
 
+    let pDeck = createDeck()
+    let cDeck = createDeck()
+
+    createPlayerHand(pDeck)
+
+
+    // use later to updat health 
+    // pHealth -= 300
+    // pHealthRemaining.innerText=pHealth
+    // console.log(playerHealth)
+    // console.log('should say 3700')
+    // pHealth -= 700
+    // pHealthRemaining.innerText=pHealth
+    // console.log(playerHealth)
+    // console.log('should say 3000')
+
+
+
+
+    createPlayerHand(pDeck)
+    // createComputerfield(cDeck)
+    draw(pDeck)
+
+    
+    
 }
+
+playGame()
