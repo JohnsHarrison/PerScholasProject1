@@ -4,6 +4,7 @@ const playerField = document.getElementById('playerHand')
 const cards = document.getElementsByClassName('card')
 const draggableCards = document.querySelectorAll('div.handCard')
 const container = document.querySelectorAll('div.fieldCard')
+const computerField = document.getElementById('computerField')
 
 
 let response = await axios.get(`${BASE_URL}type=Normal%20Monster&level=lt5`)
@@ -21,13 +22,13 @@ console.log(response.data.data)
 // console.log(response)
 
 //create a draggable cards
-draggableCards.forEach(draggableCards =>{
-    draggableCards.addEventListener('dragstart', (e) =>{
+draggableCards.forEach(draggable =>{
+    draggable.addEventListener('dragstart', (e) =>{
         console.log('drag start')
-        e.target.classList.add('dragging')
+        draggable.classList.add('dragging')
     })
-    draggableCards.addEventListener('dragend', (e) =>{
-        e.target.classList.remove('dragging')
+    draggable.addEventListener('dragend', (e) =>{
+        draggable.classList.remove('dragging')
         console.log('drag end')
     })
 })
@@ -37,7 +38,6 @@ draggableCards.forEach(draggableCards =>{
 container.forEach(container =>{
     container.addEventListener('dragover' , e =>{
     e.preventDefault()
-    const afterElement = getDragAfterElement(container, e.clientX)
     const draggable = document.querySelector('.dragging')
     container.appendChild(draggable)
     })
@@ -71,20 +71,39 @@ return playerDeck
 //create players hand from their deck
 function createPlayerHand(deck){
     let hand = []
-    // console.log(deck)
+    //draw 4 cards from player deck.
     for (let i = 0; i < 4; i++){
+        //set image for each card
+       let image = document.createElement('img')
+       image.src=deck[i].card_images[0].image_url
+       playerHand.children[i].appendChild(image)
         hand.push(deck[i])
     }
-    // console.log(hand)
-    // console.log(hand[0].card_images[0].image_url)
-    //set the card images in players hand 
-    playerHand.children[0].children[0].src=hand[0].card_images[0].image_url
-    playerHand.children[1].children[0].src=hand[1].card_images[0].image_url
-    playerHand.children[2].children[0].src=hand[2].card_images[0].image_url
-    playerHand.children[3].children[0].src=hand[3].card_images[0].image_url
 
     return hand
 }
+//create player field
+function createComputerfield(deck){
+    let field=[]
+    //attempt to make what the computer plays feel random
+    let num = Math.floor(Math.random()* (4-1)+1)
+    console.log(num)
+    for(let i=0; i < num; i++){
+        let image = document.createElement('img')
+        image.src=deck[i].card_images[0].image_url
+        computerField.children[i].appendChild(image)
+    
+        field.push(deck[i])
+    }
 
+}
 createPlayerHand(createDeck())
+createComputerfield(createDeck())
+// console.log(computerField.children[0])
 
+
+function playGame(){
+    let playerHealth = 4000
+    let computerHealth = 4000
+
+}

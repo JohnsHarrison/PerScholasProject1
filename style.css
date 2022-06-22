@@ -38,8 +38,8 @@ body{
 #playerHand{
     display: flex;
     flex-direction: row;
-    bottom: 0rem;
-    right: 14rem;
+    bottom: 1rem;
+    left: 17.9rem;
     position: absolute;
     
 }
@@ -47,8 +47,8 @@ body{
 #playerField{
     display: flex;
     flex-direction: row;
-    bottom: 10rem;
-    right: 14rem;
+    bottom: 11rem;
+    left: 18rem;
     position: absolute;
 }
 
@@ -64,6 +64,19 @@ body{
     right: 0rem;
 }
 
+#computerHealth{
+    margin-right: 20px;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    height: 200px;
+    width: 174px;
+    position: absolute;
+    top: 2rem;
+    left: 0rem;
+    transform: rotate(180deg);
+}
+
 #playerDeck{
     margin-right: 20px;
     border: 1px;
@@ -74,13 +87,14 @@ body{
     position:absolute;
     left: 5rem;
     bottom: 5rem;
+    
 }
 
 #computerField{
     display: flex;
     flex-direction: row;
     bottom: 27rem;
-    right: 9.5rem;
+    left: 21.3rem;
     position: absolute;
     transform: rotate(180deg);
 }
